@@ -1,0 +1,22 @@
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        memo = {}
+
+        def dfs(i, j):
+            if i == len(nums):
+                return 0
+            
+            if i in memo:
+                return memo[(i,j)]
+
+            lis = dfs(i+1, j)
+
+            if j == -1 or nums[i] > nums[j]:
+                lis = max(lis, 1+dfs(i+1,i))
+
+            memo[(i,j)] = lis
+            return lis
+
+        lis = dfs(0, -1)
+        return lis
+                
